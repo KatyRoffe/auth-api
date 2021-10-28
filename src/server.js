@@ -9,8 +9,9 @@ const morgan = require('morgan');
 const errorHandler = require('./error-handlers/500.js');
 const notFoundHandler = require('./error-handlers/404.js');
 const authRoutes = require('./auth/routes.js');
-const logger = require('../middleware/logger.js');
+const logger = require('./middleware/logger.js');
 const v1Routes = require('./routes/v1.js');
+const authRoutes = require('./routes/routes');
 
 // Prepare the express app
 const app = express();
@@ -21,10 +22,10 @@ app.use(morgan('dev'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(logger);
 
 // Routes
 app.use(authRoutes);
-app.use(logger);
 app.use('/api/v1', v1Routes);
 
 // Catchalls
